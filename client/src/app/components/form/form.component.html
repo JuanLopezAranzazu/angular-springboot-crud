@@ -1,0 +1,29 @@
+<div class="modal show d-block">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button type="button" class="btn-close" (click)="close.emit()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div *ngFor="let field of fields">
+            <label>{{ field.label }}</label>
+            <input
+              [type]="field.type"
+              class="form-control"
+              formControlName="{{ field.key }}"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            [disabled]="form.invalid"
+          >
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

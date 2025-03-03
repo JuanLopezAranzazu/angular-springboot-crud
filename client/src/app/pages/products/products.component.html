@@ -1,0 +1,164 @@
+<!-- sin separacion de componentes -->
+
+<!-- <div class="container mt-4">
+  <h2 class="mb-3">Gestión de Productos</h2>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Agregar Producto</h5>
+      <form (submit)="addProduct(); $event.preventDefault()">
+        <div class="mb-2">
+          <input
+            class="form-control"
+            name="name"
+            [(ngModel)]="newProduct.name"
+            placeholder="Nombre"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <input
+            class="form-control"
+            name="description"
+            [(ngModel)]="newProduct.description"
+            placeholder="Descripción"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <input
+            class="form-control"
+            name="price"
+            type="number"
+            [(ngModel)]="newProduct.price"
+            placeholder="Precio"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <input
+            class="form-control"
+            name="stock"
+            type="number"
+            [(ngModel)]="newProduct.stock"
+            placeholder="Stock"
+            required
+          />
+        </div>
+        <button class="btn btn-primary" type="submit">Agregar</button>
+      </form>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="selectProduct(product)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteProduct(product.id!)"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedProduct" class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Producto</h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="selectedProduct = null"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input
+            class="form-control mb-2"
+            name="name"
+            [(ngModel)]="selectedProduct!.name"
+          />
+          <input
+            class="form-control mb-2"
+            name="description"
+            [(ngModel)]="selectedProduct!.description"
+          />
+          <input
+            class="form-control mb-2"
+            name="price"
+            type="number"
+            [(ngModel)]="selectedProduct!.price"
+          />
+          <input
+            class="form-control mb-2"
+            name="stock"
+            type="number"
+            [(ngModel)]="selectedProduct!.stock"
+          />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="selectedProduct = null">
+            Cancelar
+          </button>
+          <button class="btn btn-primary" (click)="updateProduct()">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- con separacion de componentes -->
+
+<div class="container mt-4">
+  <h2 class="mb-3">Gestión de Productos</h2>
+
+  <button
+    class="btn btn-success"
+    (click)="showModal = true; selectedProduct = null"
+  >
+    Agregar Producto
+  </button>
+
+  <app-table
+    [columns]="columns"
+    [data]="products"
+    (edit)="selectProduct($event)"
+    (delete)="deleteProduct($event)"
+  >
+  </app-table>
+
+  <app-form
+    *ngIf="showModal"
+    [title]="selectedProduct ? 'Editar Producto' : 'Nuevo Producto'"
+    [fields]="fields"
+    [data]="selectedProduct || {}"
+    (save)="addEditProduct($event)"
+    (close)="showModal = false"
+  >
+  </app-form>
+</div>
